@@ -83,17 +83,11 @@ public class EmpPayroll {
         return this.department;
     }
 
-    @Override
-    public String toString() {
-        return "Employee Payroll{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                '}';
-    }
+   
+   
 
- 
-    public String toString2(){
+   @Override
+    public String toString(){
         return "Employee Payroll{" +
                 "emp_id=" + id +
                 ", name='" + name + '\'' +
@@ -107,6 +101,6 @@ public class EmpPayroll {
                 ", income tax="+income_tax+ '\'' +
                 ", net pay="+net_pay+ '\'' +
                 ", department="+department+ '\'' +
-                '}';
+                '}'+'\n'+'\n';
     }
 }
