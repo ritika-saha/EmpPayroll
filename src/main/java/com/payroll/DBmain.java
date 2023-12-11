@@ -23,6 +23,13 @@ public class DBmain {
         for(String s:statsData){
             System.out.println(s);
         }
+
+        String name="Joonie";
+        DBops.deleteEntry(name);
+
+        DBops.insertIntoDB("Joonie",20000,"2021-01-05","M","91 2929292929","freds",200,200,200,20000,2);
+        emp=DBops.getAllData();
+        System.out.println(emp);
         c.close();
     }
 }

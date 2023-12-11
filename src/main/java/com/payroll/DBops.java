@@ -178,4 +178,58 @@ public class DBops {
         }
         return data;
     }
+
+    public static void deleteEntry(String name){
+        String sqlQuery = "delete from employee_payroll where name=?;";
+        
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
+            statement.setString(1, name);
+            statement.executeUpdate();
+            System.out.println("DATA DELETED SUCCESFULLY FROM DB ----------------------->");
+                }catch (SQLException exception) {
+                    System.out.println(exception.getMessage());
+                    exception.printStackTrace();
+                }
+    }
+
+    public static void insertIntoDB(String name, int salary,String start_date,String gender,String phone,
+    String address,int deductions,int taxable_pay,int income_tax,int net_pay,int dep_id){
+          String sqlQuery = "insert into employee_payroll(name, salary, start_date, gender, phone, address, deductions, taxable_pay, income_tax, net_pay) values (?,?,?,?,?,?,?,?,?,?);";
+        
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
+            statement.setString(1, name);
+            statement.setInt(2, salary);
+            statement.setString(3, start_date);
+            statement.setString(4, gender);
+            statement.setString(5, phone);
+            statement.setString(6, address);
+            statement.setInt(7, deductions);
+            statement.setInt(8, taxable_pay);
+            statement.setInt(9, income_tax);
+            statement.setInt(10, net_pay);
+            statement.executeUpdate();
+
+            String getEmpIDquery="select emp_id from employee_payroll where name=?;";
+            PreparedStatement statement1=connection.prepareStatement(getEmpIDquery);
+            statement1.setString(1, name);
+            ResultSet res=statement1.executeQuery();
+            int emp_id=0;
+             while (res.next()) {  
+                 emp_id=res.getInt("emp_id");
+             }
+             String queryToUpdateDepMapping="insert into employee_departments(emp_id, dep_id) values (?,?);";
+             PreparedStatement statement3=connection.prepareStatement(queryToUpdateDepMapping);
+             statement3.setInt(1, emp_id);
+             statement3.setInt(2, dep_id);
+             statement3.executeUpdate();
+            System.out.println("DATA ADDED SUCCESFULLY TO DB ----------------------->");
+                }catch (SQLException exception) {
+                    System.out.println(exception.getMessage());
+                    exception.printStackTrace();
+                }
+    }
 }
